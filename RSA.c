@@ -1,3 +1,6 @@
+// RSA is a public-key encryption algorithm that uses an asymmetric encryption algorithm to encrypt data.
+
+
 #include<stdio.h>
 #include<math.h>
   
