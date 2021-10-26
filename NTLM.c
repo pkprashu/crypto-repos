@@ -6,6 +6,9 @@ and apply the padding rule of MD4. This is save in nt_buffer variable.
 3- convert_hex: which convert the binary output in hexadecimal string. The same format
 that exist in John the Ripper files.
 4- main: an example of use.
+
+The NTLM authentication protocols authenticate users and computers based on a challenge/response mechanism that proves to a server or domain
+controller that a user knows the password associated with an account.
  
 The output are in the variable output or in hex_format if you like this one.
  
