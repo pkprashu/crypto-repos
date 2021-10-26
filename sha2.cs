@@ -1,4 +1,5 @@
-class Sha256 {
+class Sha256 
+{
 
     /**
      * Generates SHA-256 hash of string.
@@ -15,13 +16,15 @@ class Sha256 {
      *   import Sha256 from './sha256.js';
      *   const hash = Sha256.hash('abc'); // 'ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad'
      */
-    static hash(msg, options) {
+    static hash(msg, options) 
+    {
         const defaults = { msgFormat: 'string', outFormat: 'hex' };
         const opt = Object.assign(defaults, options);
 
         // note use throughout this routine of 'n >>> 0' to coerce Number 'n' to unsigned 32-bit integer
 
-        switch (opt.msgFormat) {
+        switch (opt.msgFormat) 
+        {
             default: // default is to convert string to UTF-8, as SHA only deals with byte-streams
             case 'string':   msg = utf8Encode(msg);       break;
             case 'hex-bytes':msg = hexBytesToString(msg); break; // mostly for running tests
@@ -51,9 +54,11 @@ class Sha256 {
         const N = Math.ceil(l/16);  // number of 16-integer (512-bit) blocks required to hold 'l' ints
         const M = new Array(N);     // message M is N×16 array of 32-bit integers
 
-        for (let i=0; i<N; i++) {
+        for (let i=0; i<N; i++) 
+        {
             M[i] = new Array(16);
-            for (let j=0; j<16; j++) { // encode 4 chars per integer (64 per block), big-endian encoding
+            for (let j=0; j<16; j++) 
+            { // encode 4 chars per integer (64 per block), big-endian encoding
                 M[i][j] = (msg.charCodeAt(i*64+j*4+0)<<24) | (msg.charCodeAt(i*64+j*4+1)<<16)
                         | (msg.charCodeAt(i*64+j*4+2)<< 8) | (msg.charCodeAt(i*64+j*4+3)<< 0);
             } // note running off the end of msg is ok 'cos bitwise ops on NaN return 0
@@ -69,12 +74,14 @@ class Sha256 {
 
         // HASH COMPUTATION [§6.2.2]
 
-        for (let i=0; i<N; i++) {
+        for (let i=0; i<N; i++) 
+        {
             const W = new Array(64);
 
             // 1 - prepare message schedule 'W'
             for (let t=0;  t<16; t++) W[t] = M[i][t];
-            for (let t=16; t<64; t++) {
+            for (let t=16; t<64; t++) 
+            {
                 W[t] = (Sha256.σ1(W[t-2]) + W[t-7] + Sha256.σ0(W[t-15]) + W[t-16]) >>> 0;
             }
 
@@ -82,7 +89,8 @@ class Sha256 {
             let a = H[0], b = H[1], c = H[2], d = H[3], e = H[4], f = H[5], g = H[6], h = H[7];
 
             // 3 - main loop (note '>>> 0' for 'addition modulo 2^32')
-            for (let t=0; t<64; t++) {
+            for (let t=0; t<64; t++) 
+            {
                 const T1 = h + Sha256.Σ1(e) + Sha256.Ch(e, f, g) + K[t] + W[t];
                 const T2 =     Sha256.Σ0(a) + Sha256.Maj(a, b, c);
                 h = g;
@@ -116,7 +124,8 @@ class Sha256 {
 
         /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  */
 
-        function utf8Encode(str) {
+        function utf8Encode(str) 
+        {
             try {
                 return new TextEncoder().encode(str, 'utf-8').reduce((prev, curr) => prev + String.fromCharCode(curr), '');
             } catch (e) { // no TextEncoder available?
@@ -136,7 +145,8 @@ class Sha256 {
      * Rotates right (circular right shift) value x by n positions [§3.2.4].
      * @private
      */
-    static ROTR(n, x) {
+    static ROTR(n, x) 
+    {
         return (x >>> n) | (x << (32-n));
     }
 
